@@ -1,6 +1,6 @@
-[submodule "24001118-synrgy7-ars-bcr-ch5"]
-	path = 24001118-synrgy7-ars-bcr-ch5
-	url = https://github.com/amiqbal7/24001118-synrgy7-ars-bcr-ch5.git
+[submodule "24001118-synrgy7-ars-bcr-ch6"]
+	path = 24001118-synrgy7-ars-bcr-ch6
+	url = https://github.com/amiqbal7/24001118-synrgy7-ars-bcr-ch6.git
 [submodule "web-backoffice-service"]
 	path = web-backoffice-service
 	url = https://github.com/amiqbal7/web-backoffice-service.git
