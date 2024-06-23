@@ -1,22 +1,21 @@
-import { Button, Card, DatePicker, Form, Input, TimePicker } from "antd";
+import { Button, Card, DatePicker, Form, Input, notification } from "antd";
 import { Moment } from "moment";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import moment from "moment";
 import carImage from "../assets/header.png";
 
 interface Car {
   id: number;
-  type: string;
-  availableDate: string;
-  availableTime: string;
-  passengerCount: number;
   name: string;
+  finishRent: string;
+  capacity: number;
+  image_url: string;
+  price: string;
 }
 
 interface FormValues {
-  driverType: string;
-  date: Moment;
-  time: Moment;
+  dateTime: Moment;
   passengerCount: number;
 }
 
@@ -26,28 +25,35 @@ export const SearchCars: React.FC = () => {
   const [carData, setCarData] = useState<Car[]>([]);
 
   useEffect(() => {
-    const fetchCarData = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get<Car[]>('https://your-api-endpoint.com/cars');
-        setCarData(response.data);
+        const response = await axios.get("http://localhost:3000/cars/list");
+        console.log(response.data.data);
+        setCarData(response.data.data); // Set the car data correctly
       } catch (error) {
-        console.error('Error fetching car data:', error);
+        console.error("Error fetching car data:", error);
+        notification.error({
+          message: "Error",
+          description:
+            "Failed to fetch car data. Please check your network connection or try again later.",
+        });
       }
     };
 
-    fetchCarData();
+    fetchData();
   }, []);
 
   const handleSubmit = (values: FormValues) => {
-    const { driverType, date, time, passengerCount } = values;
+    const { dateTime, passengerCount } = values;
+    const combinedDateTime = dateTime.toISOString();
+
     const filtered = carData.filter((car) => {
       return (
-        car.type === driverType &&
-        car.availableDate <= date.format("YYYY-MM-DD") &&
-        car.availableTime <= time.format("HH:mm") &&
-        car.passengerCount >= passengerCount
+        moment(combinedDateTime).isAfter(car.finishRent) &&
+        car.capacity >= passengerCount
       );
     });
+
     setFilteredCars(filtered);
   };
 
@@ -87,30 +93,20 @@ export const SearchCars: React.FC = () => {
         <Form form={form} onFinish={handleSubmit}>
           <div className="flex gap-2">
             <Form.Item
-              label="Jenis Driver"
-              name="driverType"
-              rules={[{ required: true, message: "Please select driver type!" }]}
+              label="Tanggal & Waktu"
+              name="dateTime"
+              rules={[
+                { required: true, message: "Please select date and time!" },
+              ]}
             >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Tanggal"
-              name="date"
-              rules={[{ required: true, message: "Please select date!" }]}
-            >
-              <DatePicker />
-            </Form.Item>
-            <Form.Item
-              label="Waktu"
-              name="time"
-              rules={[{ required: true, message: "Please select time!" }]}
-            >
-              <TimePicker />
+              <DatePicker showTime format="YYYY-MM-DDTHH:mm:ss.SSS[Z]" />
             </Form.Item>
             <Form.Item
               label="Jumlah Penumpang"
               name="passengerCount"
-              rules={[{ required: true, message: "Please input passenger count!" }]}
+              rules={[
+                { required: true, message: "Please input passenger count!" },
+              ]}
             >
               <Input type="number" />
             </Form.Item>
@@ -121,15 +117,21 @@ export const SearchCars: React.FC = () => {
             </Form.Item>
           </div>
         </Form>
-        <div>
-          {filteredCars.map((car) => (
-            <Card key={car.id} title={car.name}>
-              <p>Type: {car.type}</p>
-              <p>Available Date: {car.availableDate}</p>
-              <p>Available Time: {car.availableTime}</p>
-              <p>Passenger Count: {car.passengerCount}</p>
-            </Card>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {filteredCars.length === 0 ? (
+            <p className="text-center text-xl">Tidak ada mobil yang tersedia setelah tanggal yang dipilih.</p>
+          ) : (
+            filteredCars.map((car) => (
+              <Card key={car.id} title={car.name} className="w-full">
+                <img src={car.image_url} alt={car.name} className="object-cover h-48 w-full" />
+                <p className="mt-2">
+                  Finish Rent: {moment(car.finishRent).format("YYYY-MM-DD HH:mm:ss")}
+                </p>
+                <p>Capacity: {car.capacity}</p>
+                <p>Price: {car.price}</p>
+              </Card>
+            ))
+          )}
         </div>
       </section>
     </div>
