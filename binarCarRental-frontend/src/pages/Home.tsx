@@ -10,6 +10,7 @@ import { CaretRightOutlined } from "@ant-design/icons";
 import type { CSSProperties } from "react";
 import rating from "../assets/Star 3.png";
 import img from "../assets/photo1.png";
+import { useNavigate } from "react-router-dom";
 
 const text = `
   A dog is a type of domesticated animal.
@@ -42,6 +43,7 @@ const getItems: (panelStyle: CSSProperties) => CollapseProps["items"] = (
 
 export const Home: React.FC = () => {
   const { token } = theme.useToken();
+  const navigate = useNavigate();
 
   const panelStyle: React.CSSProperties = {
     marginBottom: 24,
@@ -49,6 +51,10 @@ export const Home: React.FC = () => {
     borderRadius: token.borderRadiusLG,
     border: "none",
   };
+
+  const handleClickSearch = () => {
+    navigate('/search');
+  }
   return (
     <div>
       <section
@@ -70,7 +76,7 @@ export const Home: React.FC = () => {
                 </p>
               </div>
               <Button type="primary" className="bg-success">
-                <a href="#" className="bg-success text-white">
+                <a onClick={handleClickSearch} className="bg-success text-white">
                   Mulai Sewa Mobil
                 </a>
               </Button>

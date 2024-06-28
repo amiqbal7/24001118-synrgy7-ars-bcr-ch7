@@ -1,20 +1,43 @@
+// src/App.tsx
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Navbar } from "./components/Navbar";
+import { MainLayout } from "./layouts/MainLayout";
+import { AuthLayout } from "./layouts/AuthLayout";
 import { Home } from "./pages/Home";
 import { SearchCars } from "./pages/SearchCars";
-import { Footer } from "./components/Footer";
+import { Login } from "./pages/Login";
 
-export default function App() {
+const App: React.FC = () => {
   return (
     <Router>
-      <Navbar />
       <Routes>
-        <Route>
-          <Route path="/" element={<Home />} />
-          <Route path="/search" element={<SearchCars />} />
-        </Route>
+        <Route
+          path="/"
+          element={
+            <MainLayout>
+              <Home />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <MainLayout>
+              <SearchCars />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <AuthLayout>
+              <Login />
+            </AuthLayout>
+          }
+        />
       </Routes>
-      <Footer />
     </Router>
   );
-}
+};
+
+export default App;
