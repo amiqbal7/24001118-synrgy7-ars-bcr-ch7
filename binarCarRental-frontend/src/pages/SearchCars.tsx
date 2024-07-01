@@ -57,7 +57,7 @@ export const SearchCars: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/cars/list");
+        const response = await axios.get("https://sheer-georgeanne-haitech-858a4869.koyeb.app/cars/list");
         console.log(response.data.data);
         setCarData(response.data.data); // Set the car data correctly
       } catch (error) {
