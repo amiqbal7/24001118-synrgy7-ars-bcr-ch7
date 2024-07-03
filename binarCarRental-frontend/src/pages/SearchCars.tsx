@@ -13,7 +13,7 @@ import { Moment } from "moment";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
-import carImage from "../assets/header.png";
+
 import { DownOutlined } from "@ant-design/icons";
 
 const items: MenuProps["items"] = [
@@ -58,8 +58,7 @@ export const SearchCars: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get("https://sheer-georgeanne-haitech-858a4869.koyeb.app/cars/list");
-        console.log(response.data.data);
-        setCarData(response.data.data); // Set the car data correctly
+        setCarData(response.data.data);
       } catch (error) {
         console.error("Error fetching car data:", error);
         notification.error({
@@ -107,6 +106,7 @@ export const SearchCars: React.FC = () => {
                   kebutuhanmu untuk sewa mobil selama 24 jam.
                 </p>
               </div>
+              <a href="/learn react/i">INI TULISAN</a>
               <Button type="primary" className="bg-success">
                 <a href="#" className="bg-success text-white">
                   Mulai Sewa Mobil
@@ -115,13 +115,13 @@ export const SearchCars: React.FC = () => {
             </div>
           </div>
           <div className="w-full mt-10 col">
-            <img src={carImage} alt="Car" />
+      
           </div>
         </div>
       </section>
-      <div className="flex justify-center my-8">
-        <Form form={form} onFinish={handleSubmit} className="w-full max-w-4xl">
-          <div className="flex gap-2 shadow-md py-3 z-20 bg-white justify-center rounded-md px-8">
+      <div className="flex justify-center mt-[-40px] ">
+        <Form form={form} onFinish={handleSubmit} className="">
+          <div className="flex gap-2 shadow-md pt-6 items-center z-20 bg-white justify-center rounded-lg px-8">
             <Form.Item
               label="Tipe Driver"
               name="typedriver"
@@ -131,8 +131,8 @@ export const SearchCars: React.FC = () => {
             >
               <Dropdown menu={{ items }}>
                 <a onClick={(e) => e.preventDefault()}>
-                  <Space>
-                    Hover me
+                  <Space className="border rounded-md p-2">
+                    Pilih Tipe
                     <DownOutlined />
                   </Space>
                 </a>
@@ -164,10 +164,10 @@ export const SearchCars: React.FC = () => {
           </div>
         </Form>
       </div>
-      <section className="m-3">
+      <section className="m-3 flex justify-center">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredCars.length === 0 ? (
-            <p className="text-center text-xl">
+            <p className="text-xl">
               Tidak ada mobil yang tersedia setelah tanggal yang dipilih.
             </p>
           ) : (

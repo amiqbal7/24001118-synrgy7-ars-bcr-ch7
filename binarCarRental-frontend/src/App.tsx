@@ -6,6 +6,7 @@ import { AuthLayout } from "./layouts/AuthLayout";
 import { Home } from "./pages/Home";
 import { SearchCars } from "./pages/SearchCars";
 import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
 
 const App: React.FC = () => {
   return (
@@ -32,6 +33,14 @@ const App: React.FC = () => {
           element={
             <AuthLayout>
               <Login />
+            </AuthLayout>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <AuthLayout>
+              <Register />
             </AuthLayout>
           }
         />

@@ -11,6 +11,10 @@ import type { CSSProperties } from "react";
 import rating from "../assets/Star 3.png";
 import img from "../assets/photo1.png";
 import { useNavigate } from "react-router-dom";
+import oke from "../assets/oke.png";
+import jam from "../assets/jam.png";
+import price from "../assets/price.png";
+import award from "../assets/award.png";
 
 const text = `
   A dog is a type of domesticated animal.
@@ -137,7 +141,7 @@ export const Home: React.FC = () => {
         </p>
         <div className="w-full max-w-6xl mx-auto justify-center md:grid-cols-4 grid gap-3">
           <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow ">
-            <img className="pb-1" src="./images/oke.png" />
+            <img className="pb-1" src={oke} />
             <h1 className="font-bold pb-1">Layanan 24 Jam</h1>
             <p className="mb-3 font-normal text-gray-600">
               Go to this step by step guideline process on how to certify for
@@ -145,7 +149,7 @@ export const Home: React.FC = () => {
             </p>
           </div>
           <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow ">
-            <img src="./images/price.png" />
+            <img src={price} />
             <h1 className="font-bold py-1">Layanan 24 Jam</h1>
             <p className="mb-3 font-normal text-gray-600">
               Go to this step by step guideline process on how to certify for
@@ -153,7 +157,7 @@ export const Home: React.FC = () => {
             </p>
           </div>
           <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow ">
-            <img src="./images/jam.png" />
+            <img src={jam} />
             <h1 className="font-bold py-1">Layanan 24 Jam</h1>
             <p className="mb-3 font-normal text-gray-600">
               Go to this step by step guideline process on how to certify for
@@ -161,7 +165,7 @@ export const Home: React.FC = () => {
             </p>
           </div>
           <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
-            <img src="./images/award.png" />
+            <img src={award} />
             <h1 className="font-bold py-1">Layanan 24 Jam</h1>
             <p className="mb-3 font-normal text-gray-600">
               Go to this step by step guideline process on how to certify for

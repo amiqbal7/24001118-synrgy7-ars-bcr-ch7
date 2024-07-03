@@ -6,26 +6,28 @@ import image from "../assets/image 2.png";
 
 type FieldType = {
   email: string;
+  username: string;
   password: string;
+  role?: string;
 };
 
-export const Login: React.FC = () => {
+export const Register: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        "https://sheer-georgeanne-haitech-858a4869.koyeb.app/users/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        }
-      );
+      // memasukkan secara otomatis field role
+      const formData = { ...values, role: "client" };
+
+      const response = await fetch("https://sheer-georgeanne-haitech-858a4869.koyeb.app/users/auth/register_user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (!response.ok) {
         throw new Error("Login failed");
@@ -34,16 +36,12 @@ export const Login: React.FC = () => {
       const data = await response.json();
       localStorage.setItem("token", data.token);
       message.success("Login successful!");
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       message.error("Login failed. Please check your credentials.");
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleRegis = () => {
-    navigate("/register");
   };
 
   return (
@@ -55,7 +53,7 @@ export const Login: React.FC = () => {
         <div className="w-full max-w-md">
           <h1 className="font-bold text-xl pb-5">Welcome Back!</h1>
           <Form
-            initialValues={{ remember: true }}
+            initialValues={{ role: "client" }}
             onFinish={handleFinish}
             autoComplete="off"
             layout="vertical"
@@ -68,34 +66,25 @@ export const Login: React.FC = () => {
               <Input />
             </Form.Item>
             <Form.Item<FieldType>
+              label="Username"
+              name="username"
+              rules={[{ required: true, message: "Please input your username!" }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item<FieldType>
               label="Password"
               name="password"
-              rules={[
-                { required: true, message: "Please input your password!" },
-              ]}
+              rules={[{ required: true, message: "Please input your password!" }]}
             >
               <Input.Password />
             </Form.Item>
             <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="w-full"
-                loading={loading}
-              >
-                SignIn
+              <Button type="primary" htmlType="submit" className="w-full" loading={loading}>
+                Submit
               </Button>
             </Form.Item>
           </Form>
-          <p className="text-center">or</p>
-          <Button
-            type="primary"
-            onClick={handleRegis}
-            className="w-full"
-            loading={loading}
-          >
-            SignUp
-          </Button>
         </div>
       </div>
     </div>
