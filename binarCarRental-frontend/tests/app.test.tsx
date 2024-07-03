@@ -20,6 +20,6 @@ Object.defineProperty(window, 'matchMedia', {
 test('renders correct heading', () => {
   render(<SearchCars />);
   // Ganti dengan teks yang sebenarnya muncul di dalam komponen SearchCars
-  const linkElement = screen.getByText(/INI TULISAN/i);
+  const linkElement = screen.getByText(/Mulai Sewa Mobil/i);
   expect(linkElement).toBeInTheDocument();
 });

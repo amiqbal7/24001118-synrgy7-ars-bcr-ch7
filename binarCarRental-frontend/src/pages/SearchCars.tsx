@@ -106,9 +106,8 @@ export const SearchCars: React.FC = () => {
                   kebutuhanmu untuk sewa mobil selama 24 jam.
                 </p>
               </div>
-              <a href="/learn react/i">INI TULISAN</a>
               <Button type="primary" className="bg-success">
-                <a href="#" className="bg-success text-white">
+                <a href="/learn react/i" className="bg-success text-white">
                   Mulai Sewa Mobil
                 </a>
               </Button>
